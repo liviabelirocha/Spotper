@@ -1,0 +1,12 @@
+img {
+    width: 100px;
+    height: 80px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+nav {
+    background-color: #F2F2F2;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.2);
+}

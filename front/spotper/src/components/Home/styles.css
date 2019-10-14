@@ -1,0 +1,46 @@
+body {
+    background-image: url("../../assets/home.png");
+    background-size: cover;
+}
+
+button {
+    background-color: rgb(88, 89, 91);
+    width: 200px;
+    height: 210px;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    margin:200px 200px 0 0;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    transition-duration: 0.2s;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.content p {
+    color: rgb(242, 242, 242);
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+
+.icon {
+    width: 64px;
+    height: 64px;
+    align-self: center;
+    padding-bottom: 16px;
+}
+
+.button1 {
+    margin-left: 450px;
+}
+
+button:hover {
+    background-color: rgb(59, 40, 204);
+}
+
+button:hover > .content p {
+    font-size: 18px;
+}
