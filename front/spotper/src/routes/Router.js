@@ -4,16 +4,16 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 //components
-import Navbar from '../components/Navbar/Navbar';
 import Home from '../components/Home/Home';
-import NotFound from '../components/NotFound/NotFound';
+import CreatePlaylist from '../components/CreatePlaylist/CreatePlaylist';
+import ShowAlbums from '../components/ShowAlbums/ShowAlbums';
 
 const Router = () => (
     <BrowserRouter>
-        <Navbar/>
         <Switch>
             <Route path="/" exact={true} component={Home}/>
-            <Route path='*' component={NotFound} />
+            <Route path="/create" component={CreatePlaylist}/>
+            <Route path="/albums" component={ShowAlbums}/>
         </Switch>
     </BrowserRouter>
   );

@@ -1,9 +1,11 @@
-body {
+.background {
+    height: 100vh;
+    width: 100vw;
     background-image: url("../../assets/home.png");
     background-size: cover;
 }
 
-button {
+.homeButton {
     background-color: rgb(88, 89, 91);
     width: 200px;
     height: 210px;
@@ -31,16 +33,21 @@ button {
     height: 64px;
     align-self: center;
     padding-bottom: 16px;
+    transition-duration: 0.4s;
 }
 
 .button1 {
     margin-left: 450px;
 }
 
-button:hover {
+.homeButton:focus {
+    outline: none;
+}
+
+.homeButton:hover {
     background-color: rgb(59, 40, 204);
 }
 
-button:hover > .content p {
+.homeButton:hover > .content p {
     font-size: 18px;
 }

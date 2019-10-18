@@ -5,7 +5,7 @@ import './styles.css';
 
 const Navbar = () => {
     return(
-        <nav>
+        <nav className="nav">
             <Link to='/'>
                 <img src={logo}/>
             </Link>

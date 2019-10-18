@@ -16,9 +16,13 @@ INSERT INTO tbVendas VALUES (1, GETDATE());
 INSERT INTO tbVendas VALUES (1, GETDATE());
 INSERT INTO tbVendas VALUES (1, GETDATE());
 INSERT INTO tbVendas VALUES (5, GETDATE());
+INSERT INTO tbVendas VALUES (5, GETDATE());
 
 --Produto <-> Venda
 INSERT INTO tbProdutoVenda VALUES (5, 1, 1);
 INSERT INTO tbProdutoVenda VALUES (7, 2, 1);
 INSERT INTO tbProdutoVenda VALUES (9, 1, 3);
 INSERT INTO tbProdutoVenda VALUES (10, 2, 4);
+
+INSERT INTO tbProdutoVenda VALUES (11, 2, 4);
+INSERT INTO tbProdutoVenda VALUES (11, 1, 3);

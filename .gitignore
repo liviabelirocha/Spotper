@@ -1,0 +1,28 @@
+estudos/prova.sql
+
+#front
+# dependencies
+front/spotper/node_modules
+front/spotper/.pnp
+front/spotper/.pnp.js
+
+# testing
+front/spotper/coverage
+
+# production
+front/spotper/build
+
+# misc
+front/spotper/.DS_Store
+front/spotper/.env.local
+front/spotper/.env.development.local
+front/spotper/.env.test.local
+front/spotper/.env.production.local
+
+front/spotper/npm-debug.log*
+front/spotper/yarn-debug.log*
+front/spotper/yarn-error.log*
+
+#back
+back/api/__pycache__
+back/api/venv
