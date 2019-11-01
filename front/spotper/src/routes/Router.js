@@ -4,6 +4,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 //components
+import Navbar from '../components/Navbar/Navbar';
 import Home from '../components/Home/Home';
 import CreatePlaylist from '../components/CreatePlaylist/CreatePlaylist';
 import ShowAlbums from '../components/ShowAlbums/ShowAlbums';

@@ -6,7 +6,8 @@ img {
     margin-right: auto;
 }
 
-nav {
+.nav {
+    width: 100vw;
     background-color: #F2F2F2;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.2);
 }

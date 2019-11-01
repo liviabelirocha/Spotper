@@ -1,0 +1,50 @@
+.albums {
+    height: 100vh;
+    width: 100vw;
+    background-color: #414042;
+}
+
+.available {
+    color: white;
+    margin-top: 30px;
+    align-items: center;
+    font-size: 36px;
+}
+
+.goBack {
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    transition-duration: 0.2s;
+    width: 70px;
+    height: 30px;
+    margin-top: 15px;
+    margin-left: 15px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.goBack:hover {
+    background-color: #666666;
+    font-size: 15px;
+    color: white;
+}
+
+.continue {
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    transition-duration: 0.2s;
+    width: 100px;
+    height: 40px;
+    margin-top: 500px;
+    margin-left: 1350px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.continue:hover {
+    background-color: #666666;
+    font-size: 15px;
+    color: white;
+}
