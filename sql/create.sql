@@ -1,19 +1,21 @@
-CREATE DATABASE db_Spotper ON PRIMARY (
+CREATE DATABASE Spotper ON 
+
+PRIMARY (
     NAME = 'SpotPer',
-    FILENAME = '',
+    FILENAME = 'C:\FBD\SpotPer.mdf',
     SIZE = 5120KB,
     FILEGROWTH = 1024KB
 ),
 
-FILEGROUP SpotPet_Sec (
+FILEGROUP SpotPer_Sec (
     NAME = 'SpotPer_Sec_Arq_1',
-    FILENAME = '',
+    FILENAME = 'C:\FBD\SpotPer_Sec_001.ndf',
     SIZE = 1024KB,
     FILEGROWTH = 30%
 ),
 (
     NAME = 'SpotPer_Sec_Arq_2',
-    FILENAME = '',
+    FILENAME = 'C:\FBD\SpotPer_Sec_002.ndf',
     SIZE = 1024KB,
     MAXSIZE = 3072KB,
     FILEGROWTH = 15%
@@ -21,7 +23,7 @@ FILEGROUP SpotPet_Sec (
 
 FILEGROUP SpotPer_Terc (
     NAME = 'SpotPer_Terc',
-    FILENAME = '',
+    FILENAME = 'C:\FBD\SpotPer_Terc.ndf',
     SIZE = 2048KB,
     MAXSIZE = 5120KB,
     FILEGROWTH = 1024KB
@@ -29,7 +31,7 @@ FILEGROUP SpotPer_Terc (
 
 LOG ON (
     NAME = 'SpotPer_Log',
-    FILENAME = '',
+    FILENAME = 'C:\FBD\SpotPer_log.ldf',
     SIZE = 1024KB,
     FILEGROWTH = 10%
 );
