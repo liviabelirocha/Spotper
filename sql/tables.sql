@@ -93,21 +93,21 @@ CREATE TABLE tb_playlists (
 	cod_playlist BIGINT PRIMARY KEY IDENTITY(1,1),
 	nome VARCHAR(100) NOT NULL,
 	data_criacao DATE NOT NULL,
-	tempo_exec FLOAT NOT NULL
-);
+	tempo_exec FLOAT
+) on SpotPer_Terc;
 
 CREATE TABLE tb_faixas (
 	cod_faixa BIGINT PRIMARY KEY NOT NULL,
 	descricao VARCHAR(50) NOT NULL,
 	tempo_execucao FLOAT NOT NULL,
-	tipo_gravacao VARCHAR(50),
+	tipo_gravacao VARCHAR(50) NOT NULL,
 	cod_composicao BIGINT NOT NULL,
 
 	CONSTRAINT fk_cod_composicao FOREIGN KEY (cod_composicao)
 		REFERENCES tb_composicoes (cod_composicao)
 			ON DELETE NO ACTION
 				ON UPDATE CASCADE
-);
+) on SpotPer_Terc;
 
 /* TABELAS DE RELACIONAMENTO - SPOTPER TERCIARIO
 	-FaixasPlaylists

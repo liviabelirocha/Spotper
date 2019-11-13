@@ -12,20 +12,17 @@ export default class CreatePlaylist extends React.Component {
         redirect: false,
     }
 
-    handleChange = () => {
-        this.setState({name: this.state.name});
-    }
+    handleChange = event => { this.setState({name: event.target.value}); }
 
-    /*
-    handleClick = () => {
-        const playlistName = { name: this.state.name };
-        axios.post('link', {playlistName}).then(res => {
+    handleClick = event => {
+        event.preventDefault();
+        axios.post('http://localhost:5000/createplaylist', {name: this.state.name}, 
+        ).then(res => {
+            console.log(res);
             this.setState({ redirect: true });
-        })
-    }*/
-
-    handleClick = () => {
-        this.setState({redirect:true})
+        }).catch(error => {
+            console.log(error.response);
+        });
     }
 
     render() {
@@ -37,7 +34,7 @@ export default class CreatePlaylist extends React.Component {
                 <center className="title">Nova Playlist</center>
                 <form className="form" onSubmit={this.handleClick}>
                     <p>Nome da Playlist: </p>
-                    <input type="text" className="nomeForm" name={this.state.name} onChange={this.handleChange} required></input><br/>
+                    <input type="text" className="nomeForm" name='name' onChange={this.handleChange} required></input><br/>
                     <button className="createButton" type='submit'>Criar</button>
                 </form>
             </div>
