@@ -30,7 +30,7 @@
     color: white;
 }
 
-.continue {
+.continue-album {
     text-decoration: none;
     border: none;
     cursor: pointer;
@@ -38,13 +38,54 @@
     transition-duration: 0.2s;
     width: 100px;
     height: 40px;
-    margin-top: 500px;
     margin-left: 1350px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    position: fixed;
+    bottom: 16px;
 }
 
-.continue:hover {
+.continue-album:hover {
     background-color: #666666;
     font-size: 15px;
     color: white;
+}
+
+.show-button {
+    background-color: rgb(88, 89, 91);
+    width: 180px;
+    height: 180px;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    margin-left: 60px;
+    margin-top: 60px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    transition-duration: 0.2s;
+}
+
+.show-button:hover {
+    background-color: rgb(59, 40, 204);
+}
+
+.show-button:focus {
+    outline: none;
+}
+
+.show-content p {
+    font-size: 16px;
+    transition-duration: 0.4s;
+    color: white;
+}
+
+.album-icon {
+    width: 100px;
+    height: 100px;
+    align-self: center;
+    padding-top: 8px;
+    padding-bottom: 10px;
+    transition-duration: 0.4s;
+}
+
+.albums-row {
+    margin-left: 15px;
 }

@@ -4,10 +4,10 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 //components
-import Navbar from '../components/Navbar/Navbar';
 import Home from '../components/Home/Home';
 import CreatePlaylist from '../components/CreatePlaylist/CreatePlaylist';
 import ShowAlbums from '../components/ShowAlbums/ShowAlbums';
+import ShowPlaylists from '../components/ShowPlaylists/ShowPlaylits';
 
 const Router = () => (
     <BrowserRouter>
@@ -15,6 +15,7 @@ const Router = () => (
             <Route path="/" exact={true} component={Home}/>
             <Route path="/create" component={CreatePlaylist}/>
             <Route path="/albums" component={ShowAlbums}/>
+            <Route path="/playlists" component={ShowPlaylists}/>
         </Switch>
     </BrowserRouter>
   );

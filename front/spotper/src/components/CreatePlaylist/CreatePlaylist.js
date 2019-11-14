@@ -1,5 +1,4 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from '../Navbar/Navbar';
@@ -9,25 +8,24 @@ import './styles.css';
 export default class CreatePlaylist extends React.Component {
     state = {
         name: '',
-        redirect: false,
     }
 
     handleChange = event => { this.setState({name: event.target.value}); }
 
     handleClick = event => {
         event.preventDefault();
-        axios.post('http://localhost:5000/createplaylist', {name: this.state.name}, 
-        ).then(res => {
+        axios.post('http://localhost:5000/createplaylist', {name: this.state.name}, {
+            headers: { 'Acess-Control-Allow-Origin': '*' },
+        }).then(res => {
             console.log(res);
-            this.setState({ redirect: true });
+            this.props.history.push('/albums');
         }).catch(error => {
-            console.log(error.response);
+            console.log(error);
+            this.props.history.push('/albums');
         });
     }
 
     render() {
-        if (this.state.redirect) { return <Redirect push to = '/albums'/> }
-
         return (
             <div className="create">
                 <Navbar/>

@@ -9,6 +9,7 @@ import pyodbc as pyodbc
 app = Flask(__name__)
 app.config.from_object(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
+Debug = True
 
 connection = pyodbc.connect(
     Driver = 'ODBC Driver 17 for SQL Server',
@@ -28,5 +29,16 @@ def create_playlist():
 
 @app.route('/showalbums', methods=['GET'])
 def show_albums():
+        album_names = []
         cursor.execute("SELECT descricao FROM tb_albuns")
-        connection.commit()
+        for (row) in cursor:
+            album_names.append(row.descricao)
+        return jsonify(album_names)
+
+@app.route('/showplaylists', methods=['GET'])
+def show_playlists():
+    playlist_names = []
+    cursor.execute("SELECT nome FROM tb_playlists")
+    for (row) in cursor:
+        playlist_names.append(row.nome)
+    return jsonify(playlist_names)

@@ -1,0 +1,35 @@
+.playlists {
+    height: 100%;
+    width: 100vw;
+    background-color: #414042;
+}
+
+.playlist-icon {
+    width: 100px;
+    height: 100px;
+    align-self: center;
+    padding-top: 8px;
+    padding-bottom: 10px;
+    transition-duration: 0.4s;
+}
+
+.show-button-playlists {
+    background-color: rgb(88, 89, 91);
+    width: 180px;
+    height: 180px;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    margin-left: 60px;
+    margin-top: 60px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    transition-duration: 0.2s;
+}
+
+.show-button-playlists:hover {
+    background-color: rgb(59, 40, 204);
+}
+
+.show-button-playlists:focus {
+    outline: none;
+}

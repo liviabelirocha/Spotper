@@ -19,7 +19,7 @@ const Home = () => {
                     </div>
                 </button>
             </Link>
-            <Link to="/">
+            <Link to="/playlists">
                 <button className="homeButton">
                     <div className="content">
                         <Edit className="icon"/>
