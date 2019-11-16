@@ -41,7 +41,8 @@ CREATE TABLE tb_albuns (
 	CONSTRAINT fk_cod_gravadora FOREIGN KEY (cod_gravadora)
 		REFERENCES tb_gravadoras (cod_gravadora)
 			ON DELETE NO ACTION
-				ON UPDATE CASCADE
+				ON UPDATE CASCADE,
+	CHECK(data_de_compra > '2000-01-01')
 ) ON SpotPer_Sec;
 
 CREATE TABLE tb_composicoes (
@@ -79,6 +80,7 @@ CREATE TABLE tb_compositores (
 /* TABELAS DE RELACIONAMENTO - SPOTPER SECUNDARIO
 	-FaixasCompositores
 	-FaixasInterpretes
+	-FaixasAlbum
 */
 
 CREATE TABLE tb_composta_por(
@@ -103,6 +105,19 @@ CREATE TABLE tb_intepretada_por(
 			ON DELETE NO ACTION
 			ON UPDATE CASCADE,
 	PRIMARY KEY (cod_faixa, cod_interprete)
+) on SpotPer_Sec;
+
+CREATE TABLE tb_faixa_album(
+	num_faixa INTEGER NOT NULL,
+	CONSTRAINT fk_cod_faixa FOREIGN KEY (cod_faixa)
+		REFERENCES tb_faixas (cod_faixa)
+			ON DELETE CASCADE
+			ON UPDATE CASCADE,
+	CONSTRAINT fk_cod_album FOREIGN KEY (cod_album)
+		REFERENCES tb_albuns (cod_album)
+			ON DELETE CASCADE
+			ON UPDATE CASCADE,
+	PRIMARY KEY (cod_faixa, cod_album)	
 ) on SpotPer_Sec;
 
 /*
