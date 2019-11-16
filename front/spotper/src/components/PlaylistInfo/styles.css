@@ -1,0 +1,15 @@
+.playlist-info {
+    height: 100vh;
+    width: 100vw;
+    background-color: #414042;
+}
+
+hr {
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+.main-playlist-info {
+    color: white;
+    margin-left: 60px;
+}

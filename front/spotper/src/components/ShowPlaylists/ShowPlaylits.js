@@ -21,14 +21,18 @@ export default class ShowPlaylists extends React.Component {
     }
 
     render() {
-        const playlistNames = this.state.playlists.map(item => 
-            <button className="show-button-playlists">
-                <div className="show-content">
-                    <PlaylistIcon className="playlist-icon"/>
-                    <p>{item}</p>
-                </div>
-            </button>
-        );
+        const playlistNames = this.state.playlists.map(item => {
+            return (
+                <Link to={`/playlistinfo/${item}`}>
+                    <button className="show-button-playlists">
+                        <div className="show-content">
+                            <PlaylistIcon className="playlist-icon"/>
+                            <p>{item}</p>
+                        </div>
+                    </button>
+                </Link>
+            )
+        });
         
         return (
             <div className="playlists">

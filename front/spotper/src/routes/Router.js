@@ -8,6 +8,8 @@ import Home from '../components/Home/Home';
 import CreatePlaylist from '../components/CreatePlaylist/CreatePlaylist';
 import ShowAlbums from '../components/ShowAlbums/ShowAlbums';
 import ShowPlaylists from '../components/ShowPlaylists/ShowPlaylits';
+import AlbumInfo from '../components/AlbumInfo/AlbumInfo';
+import PlaylistInfo from '../components/PlaylistInfo/PlaylistInfo';
 
 const Router = () => (
     <BrowserRouter>
@@ -16,6 +18,8 @@ const Router = () => (
             <Route path="/create" component={CreatePlaylist}/>
             <Route path="/albums" component={ShowAlbums}/>
             <Route path="/playlists" component={ShowPlaylists}/>
+            <Route path="/albuminfo/:album"component={AlbumInfo}/>
+            <Route path="/playlistinfo/:playlist" component={PlaylistInfo}/>
         </Switch>
     </BrowserRouter>
   );

@@ -21,14 +21,17 @@ export default class ShowAlbums extends React.Component {
     }
 
     render() {
-        const albumNames = this.state.albums.map(item => 
-            <button className="show-button">
-                <div className="show-content">
-                    <AlbumIcon className="album-icon"/>
-                    <p>{item}</p>
-                </div>
-            </button>
-        );
+        const albumNames = this.state.albums.map(item => {
+            return (
+            <Link to={`/albuminfo/${item}`}>
+                <button className="show-button">
+                    <div className="show-content">
+                        <AlbumIcon className="album-icon"/>
+                        <p>{item}</p>
+                    </div>
+                </button>
+            </Link> )
+        });
         
         return (
             <div className="albums">
