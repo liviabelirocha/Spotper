@@ -81,6 +81,17 @@ CREATE TABLE tb_compositores (
 	-FaixasInterpretes
 */
 
+CREATE TABLE tb_composta_por(
+	CONSTRAINT fk_cod_faixa FOREIGN KEY (cod_faixa)
+		REFERENCES tb_faixas (cod_faixa)
+			ON DELETE NO ACTION
+			ON UPDATE CASCADE,
+	CONSTRAINT fk_cod_compositor FOREIGN KEY (cod_compositor)
+		REFERENCES tb_compositores (cod_compositor)
+			ON DELETE NO ACTION
+			ON UPDATE CASCADE,
+	PRIMARY KEY (cod_faixa, cod_compositor)
+) on SpotPer_Sec;
 
 
 /*
