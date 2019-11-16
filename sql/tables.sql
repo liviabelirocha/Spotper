@@ -134,3 +134,17 @@ CREATE TABLE tb_faixas (
 /* TABELAS DE RELACIONAMENTO - SPOTPER TERCIARIO
 	-FaixasPlaylists
 */
+
+CREATE TABLE tb_faixas_playlists(
+	ultima_vez_tocada DATE NOT NULL,
+	quantidade BIGINT NOT NULL,
+	CONSTRAINT fk_cod_faixa FOREIGN KEY (cod_faixa)
+		REFERENCES tb_faixas (cod_faixa)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	CONSTRAINT fk_cod_playlist FOREIGN KEY (cod_playlist)
+		REFERENCES tb_playlists (cod_playlist)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	PRIMARY KEY (cod_faixa, cod_playlist)
+) on SpotPer_Terc;
