@@ -93,6 +93,17 @@ CREATE TABLE tb_composta_por(
 	PRIMARY KEY (cod_faixa, cod_compositor)
 ) on SpotPer_Sec;
 
+CREATE TABLE tb_intepretada_por(
+	CONSTRAINT fk_cod_faixa FOREIGN KEY (cod_faixa)
+		REFERENCES tb_faixas (cod_faixa)
+			ON DELETE NO ACTION
+			ON UPDATE CASCADE,
+	CONSTRAINT fk_cod_interprete FOREIGN KEY (cod_interprete)
+		REFERENCES tb_interpretes (cod_interprete)
+			ON DELETE NO ACTION
+			ON UPDATE CASCADE,
+	PRIMARY KEY (cod_faixa, cod_interprete)
+) on SpotPer_Sec;
 
 /*
 TABELAS NO SPOTPER TERCIARIO
