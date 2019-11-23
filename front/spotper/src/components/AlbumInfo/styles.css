@@ -4,12 +4,47 @@
     background-color: #414042;
 }
 
-hr {
-    margin-left: 60px;
-    margin-right: 60px;
-}
-
 .main-album-info {
     color: white;
     margin-left: 60px;
+}
+
+.song-head {
+    color: white;
+    font-weight: bold;
+    padding-left: 60px;
+}
+
+.song-name {
+    padding-right: 300px;
+}
+
+.song-info {
+    color: white;
+    padding-left: 60px;
+    padding-top: 24px;
+}
+
+.add-music-button {
+    border: none;
+    border-radius: 50%;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    margin-left: 60px;
+    margin-top: 24px;
+}
+
+.add-music-icon {
+    width: 16px;
+    height: 16px;
+    align-self: center;
+    padding-top: 4px;
+}
+
+.add-music-button:hover {
+    background-color: rgba(88, 89, 91, 0.7);
+}
+
+.add-music-button:focus {
+    outline: none;
 }

@@ -1,29 +1,53 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from '../Navbar/Navbar';
 
 import './styles.css';
 
+import { ReactComponent as Plus } from '../../assets/plus.svg';
+
 export default class AlbumInfo extends React.Component {
     state = {
-        albumData: []
+        albumData: [],
+        musics: []
     }
 
     componentDidMount() {
         const link = this.props.match.params.album;
-        axios.get('http://localhost:5000/showalbuminfo/'+link)
+        axios.get('http://localhost:5000/showalbuminfo/' + link)
             .then(res => {
-                this.setState({albumData: res.data});
-        })
+                this.setState({ albumData: res.data });
+                axios.get('http://localhost:5000/showmusicsalbum/' + link)
+                    .then(res => {
+                        this.setState({ musics: res.data });
+                    });
+            });
     }
 
     render() {
+        const musics = this.state.musics.map((item) => {
+            return (
+                <tr>
+                    <button className="add-music-button" onClick={this.commitSong}>
+                        <Plus className="add-music-icon" />
+                    </button>
+                    <td className="song-info">{item.num_faixa}</td>
+                    <td className="song-info">{item.descricao}</td>
+                    <td className="song-info">{item.compositor}</td>
+                    <td className="song-info">{item.tempo_execucao}</td>
+                    <td className="song-info">{item.interprete}</td>
+                    <td className="song-info">{item.tipo_composicao}</td>
+                    <td className="song-info">{item.tipo_gravacao}</td>
+                </tr>
+            )
+        })
+
         return (
             <div className="album-info">
-                <Navbar/>
-                <Link to = '/albums'>
+                <Navbar />
+                <Link to='/albums'>
                     <button className="goBack">Voltar</button>
                 </Link>
 
@@ -33,15 +57,27 @@ export default class AlbumInfo extends React.Component {
                         (cod_{this.state.albumData.cod_album})
                     </h1>
                     <h3>
-                        R$ {this.state.albumData.preco_de_compra} - 
-                        &nbsp;{this.state.albumData.tipo_de_compra} - 
+                        R$ {this.state.albumData.preco_de_compra} -
+                        &nbsp;{this.state.albumData.tipo_de_compra} -
                         &nbsp;{this.state.albumData.data_de_compra}
                         <br></br>
                         {this.state.albumData.nome_gravadora} -
                         &nbsp;{this.state.albumData.data_de_gravacao}
                     </h3>
                 </div>
-                <hr className="line"/>
+                <table>
+                    <tr>
+                        <th className="song-head">add</th>
+                        <th className="song-head">nº</th>
+                        <th className="song-head song-name">nome</th>
+                        <th className="song-head">compositor(es)</th>
+                        <th className="song-head">tempo</th>
+                        <th className="song-head">intérprete</th>
+                        <th className="song-head">tipo de composição</th>
+                        <th className="song-head">tipo de gravação</th>
+                    </tr>
+                    <tbody> {musics}</tbody>
+                </table>
             </div>
         )
     }

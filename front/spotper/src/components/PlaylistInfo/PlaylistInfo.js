@@ -16,7 +16,6 @@ export default class AlbumInfo extends React.Component {
         axios.get('http://localhost:5000/showplaylistinfo/'+link)
             .then(res => {
                 this.setState({playlistData: res.data});
-                console.log(this.state.playlistData);
         })
     }
 
@@ -36,6 +35,9 @@ export default class AlbumInfo extends React.Component {
                     <h3>
                         Tempo de execução: &nbsp;
                         {this.state.playlistData.tempo_exec} s
+                        <br></br>
+                        Criada em: &nbsp;
+                        {this.state.playlistData.data_criacao}
                     </h3>
                 </div>
                 <hr className="line"/>

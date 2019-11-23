@@ -10,11 +10,11 @@ export default class CreatePlaylist extends React.Component {
         name: '',
     }
 
-    handleChange = event => { this.setState({name: event.target.value}); }
+    handleChange = event => { this.setState({ name: event.target.value }); }
 
     handleClick = event => {
         event.preventDefault();
-        axios.post('http://localhost:5000/createplaylist', {name: this.state.name}, {
+        axios.post('http://localhost:5000/createplaylist', { name: this.state.name }, {
             headers: { 'Acess-Control-Allow-Origin': '*' },
         }).then(res => {
             console.log(res);
@@ -28,11 +28,11 @@ export default class CreatePlaylist extends React.Component {
     render() {
         return (
             <div className="create">
-                <Navbar/>
+                <Navbar />
                 <center className="title">Nova Playlist</center>
                 <form className="form" onSubmit={this.handleClick}>
                     <p>Nome da Playlist: </p>
-                    <input type="text" className="nomeForm" name='name' onChange={this.handleChange} required></input><br/>
+                    <input type="text" className="nomeForm" name='name' onChange={this.handleChange} required></input><br />
                     <button className="createButton" type='submit'>Criar</button>
                 </form>
             </div>
