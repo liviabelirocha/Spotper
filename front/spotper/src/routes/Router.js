@@ -14,14 +14,14 @@ import PlaylistInfo from '../components/PlaylistInfo/PlaylistInfo';
 const Router = () => (
     <BrowserRouter>
         <Switch>
-            <Route path="/" exact={true} component={Home}/>
-            <Route path="/create" component={CreatePlaylist}/>
-            <Route path="/albums" component={ShowAlbums}/>
-            <Route path="/playlists" component={ShowPlaylists}/>
-            <Route path="/albuminfo/:album"component={AlbumInfo}/>
-            <Route path="/playlistinfo/:playlist" component={PlaylistInfo}/>
+            <Route path="/" exact={true} component={Home} />
+            <Route path="/create" component={CreatePlaylist} />
+            <Route path="/albums/:playlist" component={ShowAlbums} />
+            <Route path="/playlists" component={ShowPlaylists} />
+            <Route path="/albuminfo/:playlist/:album" component={AlbumInfo} />
+            <Route path="/playlistinfo/:playlist" component={PlaylistInfo} />
         </Switch>
     </BrowserRouter>
-  );
-  
-  export default Router;
+);
+
+export default Router;

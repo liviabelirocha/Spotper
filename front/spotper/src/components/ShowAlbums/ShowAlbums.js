@@ -10,7 +10,8 @@ import './styles.css';
 
 export default class ShowAlbums extends React.Component {
     state = {
-        albums: []
+        albums: [],
+        link: this.props.match.params.playlist
     }
 
     componentDidMount() {
@@ -23,11 +24,11 @@ export default class ShowAlbums extends React.Component {
     render() {
         const albumNames = this.state.albums.map(item => {
             return (
-                <Link to={`/albuminfo/${item}`}>
+                <Link to={`/albuminfo/${this.state.link}/${item.cod_album}`}>
                     <button className="show-button">
                         <div className="show-content">
                             <AlbumIcon className="album-icon" />
-                            <p>{item}</p>
+                            <p>{item.descricao}</p>
                         </div>
                     </button>
                 </Link>)
@@ -36,7 +37,7 @@ export default class ShowAlbums extends React.Component {
         return (
             <div className="albums">
                 <Navbar />
-                <Link to='/create'>
+                <Link to='/playlists'>
                     <button className="goBack">Voltar</button>
                 </Link>
                 <center className="available">Álbuns Disponíveis</center>

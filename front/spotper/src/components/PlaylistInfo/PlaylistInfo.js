@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from '../Navbar/Navbar';
@@ -8,25 +8,28 @@ import './styles.css';
 
 export default class AlbumInfo extends React.Component {
     state = {
-        playlistData: []
+        playlistData: [],
+        link: this.props.match.params.playlist
     }
 
     componentDidMount() {
-        const link = this.props.match.params.playlist;
-        axios.get('http://localhost:5000/showplaylistinfo/'+link)
+        axios.get('http://localhost:5000/showplaylistinfo/' + this.state.link)
             .then(res => {
-                this.setState({playlistData: res.data});
-        })
+                this.setState({ playlistData: res.data });
+            })
     }
 
     render() {
         return (
             <div className="playlist-info">
-                <Navbar/>
-                <Link to = '/playlists'>
+                <Navbar />
+                <Link to='/playlists'>
                     <button className="goBack">Voltar</button>
                 </Link>
-                
+                <Link to={'/albums/' + this.state.link}>
+                    <button className="addSongs">Adicionar Músicas</button>
+                </Link>
+
                 <div className="main-playlist-info">
                     <h1>
                         {this.state.playlistData.nome}&nbsp;
@@ -40,8 +43,8 @@ export default class AlbumInfo extends React.Component {
                         {this.state.playlistData.data_criacao}
                     </h3>
                 </div>
-                <hr className="line"/>
-            </div>
+                <hr className="line" />
+            </div >
         )
     }
 }

@@ -18,10 +18,12 @@ export default class CreatePlaylist extends React.Component {
             headers: { 'Acess-Control-Allow-Origin': '*' },
         }).then(res => {
             console.log(res);
-            this.props.history.push('/albums');
+            alert("Playlist Criada!");
+            this.props.history.push('/playlists');
         }).catch(error => {
             console.log(error);
-            this.props.history.push('/albums');
+            alert("Playlist Criada!");
+            this.props.history.push('/playlists');
         });
     }
 

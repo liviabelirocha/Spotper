@@ -11,15 +11,15 @@ import { ReactComponent as Plus } from '../../assets/plus.svg';
 export default class AlbumInfo extends React.Component {
     state = {
         albumData: [],
-        musics: []
+        musics: [],
+        link: this.props.match.params.album
     }
 
     componentDidMount() {
-        const link = this.props.match.params.album;
-        axios.get('http://localhost:5000/showalbuminfo/' + link)
+        axios.get('http://localhost:5000/showalbuminfo/' + this.state.link)
             .then(res => {
                 this.setState({ albumData: res.data });
-                axios.get('http://localhost:5000/showmusicsalbum/' + link)
+                axios.get('http://localhost:5000/showmusicsalbum/' + this.state.link)
                     .then(res => {
                         this.setState({ musics: res.data });
                     });
@@ -47,7 +47,7 @@ export default class AlbumInfo extends React.Component {
         return (
             <div className="album-info">
                 <Navbar />
-                <Link to='/albums'>
+                <Link to={'/albums/' + this.state.link}>
                     <button className="goBack">Voltar</button>
                 </Link>
 
@@ -76,7 +76,7 @@ export default class AlbumInfo extends React.Component {
                         <th className="song-head">tipo de composição</th>
                         <th className="song-head">tipo de gravação</th>
                     </tr>
-                    <tbody> {musics}</tbody>
+                    <tbody>{musics}</tbody>
                 </table>
             </div>
         )
