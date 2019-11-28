@@ -15,5 +15,20 @@ hr {
 }
 
 .addSongs {
-    
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    transition-duration: 0.2s;
+    width: 130px;
+    height: 30px;
+    margin-top: 15px;
+    margin-left: 15px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.addSongs:hover {
+    background-color: #666666;
+    font-size: 14.5px;
+    color: white;
 }

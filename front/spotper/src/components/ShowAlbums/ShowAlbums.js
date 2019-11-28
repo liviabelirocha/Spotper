@@ -37,7 +37,7 @@ export default class ShowAlbums extends React.Component {
         return (
             <div className="albums">
                 <Navbar />
-                <Link to='/playlists'>
+                <Link to={'/playlistinfo/' + this.state.link}>
                     <button className="goBack">Voltar</button>
                 </Link>
                 <center className="available">Álbuns Disponíveis</center>

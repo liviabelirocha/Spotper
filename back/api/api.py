@@ -93,3 +93,11 @@ def show_musics_album(album):
     for row in cursor:
         musics.append(dict(zip(columns, row)))
     return jsonify(musics)
+
+# incomplete cos im lazy
+@app.route('/addtoplaylist', methods=['GET', 'POST'])
+def add_to_playlist():
+    if request.method == 'POST':
+        data = request.json()
+        cursor.execute()
+        connection.commit()

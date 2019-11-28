@@ -10,22 +10,27 @@ import './styles.css';
 
 export default class ShowPlaylists extends React.Component {
     state = {
-        playlists: []
+        playlists: [],
+
     }
 
     componentDidMount() {
         axios.get('http://localhost:5000/showplaylists')
             .then(res => {
-                console.log(res.data)
                 this.setState({ playlists: res.data })
             })
     }
 
+    addToPlaylist = event => {
+        event.preventDefault();
+        axios.post()
+    }
+
     render() {
-        const playlistNames = this.state.playlists.map((item, key) => {
+        const playlistNames = this.state.playlists.map(item => {
             return (
-                <Link to={`/playlistinfo/${item.cod_playlist}`}>
-                    <button className="show-button-playlists">
+                <Link to={`/playlistinfo/${item.cod_playlist}`} key={item.cod_playlist}>
+                    <button className="show-button-playlists" >
                         <div className="show-content">
                             <PlaylistIcon className="playlist-icon" />
                             <p>{item.nome}</p>
@@ -42,7 +47,7 @@ export default class ShowPlaylists extends React.Component {
                     <button className="goBack">Voltar</button>
                 </Link>
                 <center className="available">Playlists Disponíveis</center>
-                <div className="playlists-rol">{playlistNames}</div>
+                <div className="playlists-rol" >{playlistNames}</div>
             </div>
         )
     }

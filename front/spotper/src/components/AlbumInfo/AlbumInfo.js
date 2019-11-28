@@ -12,7 +12,9 @@ export default class AlbumInfo extends React.Component {
     state = {
         albumData: [],
         musics: [],
-        link: this.props.match.params.album
+        link: this.props.match.params.album,
+        pl: this.props.match.params.playlist,
+
     }
 
     componentDidMount() {
@@ -26,13 +28,20 @@ export default class AlbumInfo extends React.Component {
             });
     }
 
+    commitSong = event => {
+        event.preventDefault();
+
+    }
+
     render() {
         const musics = this.state.musics.map((item) => {
             return (
-                <tr>
-                    <button className="add-music-button" onClick={this.commitSong}>
-                        <Plus className="add-music-icon" />
-                    </button>
+                <tr key={item.num_faixa}>
+                    <td>
+                        <button className="add-music-button" onClick={this.commitSong}>
+                            <Plus className="add-music-icon" />
+                        </button>
+                    </td>
                     <td className="song-info">{item.num_faixa}</td>
                     <td className="song-info">{item.descricao}</td>
                     <td className="song-info">{item.compositor}</td>
@@ -47,7 +56,7 @@ export default class AlbumInfo extends React.Component {
         return (
             <div className="album-info">
                 <Navbar />
-                <Link to={'/albums/' + this.state.link}>
+                <Link to={'/albums/' + this.state.pl}>
                     <button className="goBack">Voltar</button>
                 </Link>
 
