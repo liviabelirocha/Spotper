@@ -17,29 +17,31 @@ export default class AlbumInfo extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/showalbuminfo/' + this.state.link)
-            .then(res => {
-                this.setState({ albumData: res.data });
-                axios.get('http://localhost:5000/showmusicsalbum/' + this.state.link)
-                    .then(res => {
-                        this.setState({ musics: res.data });
-                    });
-            });
+        axios.get('http://localhost:5000/showalbuminfo/' + this.state.link, {
+            headers: { 'Access-Control-Allow-Origin': '*' },
+        }).then(res => {
+            this.setState({ albumData: res.data });
+            axios.get('http://localhost:5000/showmusicsalbum/' + this.state.link)
+                .then(res => {
+                    this.setState({ musics: res.data });
+                });
+        });
     }
 
     commitSong = (e) => {
         let data = {
             'faixa': e,
-            'playlist': this.state.pl
+            'playlist': parseInt(this.state.pl)
         }
-        console.log(data)
-        /*
-        axios.post('http://localhost:5000/addtoplaylist', data)
-            .then(res => {
-                console.log(res);
-            }).catch(err => {
-                console.log(err);
-            })*/
+        axios.post('http://localhost:5000/addtoplaylist', data, {
+            headers: { 'Access-Control-Allow-Origin': '*' },
+        }).then(res => {
+            console.log(res);
+            alert("Música adicionada com sucesso!")
+        }).catch(err => {
+            console.log(err);
+            alert("Música já se encontra na playlist!")
+        })
 
     }
 
@@ -48,7 +50,7 @@ export default class AlbumInfo extends React.Component {
             return (
                 <tr key={item.num_faixa}>
                     <td>
-                        <button className="add-music-button" onClick={this.commitSong(item.cod_faixa)}>
+                        <button className="add-music-button" onClick={() => this.commitSong(item.cod_faixa)}>
                             <Plus className="add-music-icon" />
                         </button>
                     </td>

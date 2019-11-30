@@ -10,6 +10,7 @@ export default class AlbumInfo extends React.Component {
     state = {
         playlistData: [],
         musics: [],
+        duration: '',
         link: this.props.match.params.playlist
     }
 
@@ -17,11 +18,32 @@ export default class AlbumInfo extends React.Component {
         axios.get('http://localhost:5000/showplaylistinfo/' + this.state.link)
             .then(res => {
                 this.setState({ playlistData: res.data });
-                axios.get('http://localhost:5000/showmusicsplaylist/' + this.state.link)
+                axios.get('http://localhost:5000/playlistduration/' + this.state.link)
                     .then(res => {
-                        this.setState({ musics: res.data });
+                        this.setState({ duration: res.data });
+                        axios.get('http://localhost:5000/showmusicsplaylist/' + this.state.link)
+                            .then(res => {
+                                this.setState({ musics: res.data });
+                            })
                     })
             })
+    }
+
+    removeSong = (e) => {
+        let data = {
+            'faixa': e,
+            'playlist': parseInt(this.state.link)
+        };
+        axios.post('http://localhost:5000/removefromplaylist', data, {
+            headers: { 'Access-Control-Allow-Origin': '*' },
+        }).then(res => {
+            console.log(res);
+            alert("Música removida com sucesso!")
+            window.location.reload();
+        }).catch(err => {
+            console.log(err);
+            alert("Música já se encontra na playlist!")
+        })
     }
 
     render() {
@@ -29,7 +51,7 @@ export default class AlbumInfo extends React.Component {
             return (
                 <tr key={item.num_faixa}>
                     <td>
-                        <button className="remove-music-button" onClick={this.removeSong}> - </button>
+                        <button className="remove-music-button" onClick={() => this.removeSong(item.cod_faixa)}> - </button>
                     </td>
                     <td className="song-info">{item.descricao}</td>
                     <td className="song-info">{item.album}</td>
@@ -54,8 +76,8 @@ export default class AlbumInfo extends React.Component {
                         (cod_{this.state.playlistData.cod_playlist})
                     </h1>
                     <h3>
-                        Tempo de execução: &nbsp;
-                        {this.state.playlistData.tempo_exec} s
+                        Tempo de duração: &nbsp;
+                        {this.state.duration} s
                         <br></br>
                         Criada em: &nbsp;
                         {this.state.playlistData.data_criacao}

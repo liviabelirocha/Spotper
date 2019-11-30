@@ -15,14 +15,14 @@ export default class CreatePlaylist extends React.Component {
     handleClick = event => {
         event.preventDefault();
         axios.post('http://localhost:5000/createplaylist', { name: this.state.name }, {
-            headers: { 'Acess-Control-Allow-Origin': '*' },
+            headers: { 'Access-Control-Allow-Origin': '*' },
         }).then(res => {
             console.log(res);
             alert("Playlist Criada!");
             this.props.history.push('/playlists');
         }).catch(error => {
             console.log(error);
-            alert("Playlist Criada!");
+            alert("Erro!");
             this.props.history.push('/playlists');
         });
     }

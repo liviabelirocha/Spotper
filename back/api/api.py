@@ -1,14 +1,12 @@
-# venv\Scripts\activate
-# set FLASK_APP=api.py
-# flask run
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 import pyodbc as pyodbc
 
+import functions as func
+
 app = Flask(__name__)
-app.config.from_object(__name__)
-CORS(app, resources={r'/*': {'origins': '*'}})
+CORS(app)
 Debug = True
 
 connection = pyodbc.connect(
@@ -25,9 +23,9 @@ cursor = connection.cursor()
 def create_playlist():
     if request.method == 'POST':
         data = request.get_json()
-        cursor.execute(
-            "INSERT INTO tb_playlists (nome, data_criacao, tempo_exec) VALUES (?, GETDATE(), NULL)", data.get('name'))
+        cursor.execute("INSERT INTO tb_playlists (nome, data_criacao, tempo_exec) VALUES (?, GETDATE(), NULL)", data.get('name'))
         connection.commit()
+        return data
 
 # Mostra todos os álbuns disponíveis
 @app.route('/showalbums', methods=['GET'])
@@ -81,6 +79,18 @@ def playlist_page(playlist):
         playlist_info["tempo_exec"] = 0
     return jsonify(playlist_info)
 
+@app.route('/playlistduration/<playlist>', methods=['GET'])
+def playlist_duration(playlist):
+    cursor.execute("""select sum(f.tempo_execucao) as tempo_total
+                      from tb_playlists p, tb_faixas_playlists fp, tb_faixas f
+                      where p.cod_playlist = fp.cod_playlist and fp.cod_playlist = ?""", playlist)
+    tempo = []
+    for row in cursor:
+        tempo = row.tempo_total
+        tempo = func.sec_to_min(tempo)
+        break
+    return jsonify(tempo)
+
 # Mostra as músicas de um determinado álbum
 @app.route('/showmusicsalbum/<album>', methods=['GET'])
 def show_musics_album(album):
@@ -97,7 +107,7 @@ def show_musics_album(album):
 #Mostra as músicas de uma determinada playlist
 @app.route('/showmusicsplaylist/<playlist>', methods=['GET'])
 def show_musics_playlist(playlist):
-    cursor.execute("""select f.descricao, f.tempo_execucao, a.descricao as 'album'
+    cursor.execute("""select f.descricao, f.tempo_execucao, a.descricao as 'album', f.cod_faixa
                       from tb_faixas_playlists fp, tb_faixas f, tb_albuns a, tb_faixa_album fa
                       where f.cod_faixa = fp.cod_faixa and f.cod_faixa = fa.cod_faixa and fp.cod_playlist = ?""", playlist)
     musics = []
@@ -106,11 +116,20 @@ def show_musics_playlist(playlist):
         musics.append(dict(zip(columns, row)))
     return jsonify(musics)
     
-# incomplete cos im lazy
+#Adiciona música a playlist
 @app.route('/addtoplaylist', methods=['GET', 'POST'])
 def add_to_playlist():
     if request.method == 'POST':
-        data = request.json()
-        print(data)
+        data = request.get_json()
         cursor.execute('INSERT INTO tb_faixas_playlists VALUES (?, ?, GETDATE(), 1)', data.get('faixa'), data.get('playlist'))
         connection.commit()
+        return data
+
+#Remove músicas da playlist
+@app.route('/removefromplaylist', methods=['GET', 'POST'])
+def remove_from_playlist():
+    if request.method == 'POST':
+        data = request.get_json()
+        cursor.execute('DELETE FROM tb_faixas_playlists WHERE cod_playlist = ? and cod_faixa = ?', data.get('playlist'), data.get('faixa'))
+        connection.commit()
+        return data
