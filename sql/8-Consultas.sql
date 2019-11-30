@@ -6,4 +6,9 @@ FROM tb_faixas_playlists t_fplay INNER JOIN tb_playlists t_play INNER JOIN tb_fa
     ON t_fplay.cod_faixa = t_f.cod_faixa ON t_fa.cod_faixa = t_f.cod_faixa ON t_fa.cod_album = t_a.cod_album
     ON t_ip.cod_faixa = t_f.cod_faixa ON t_ip.cod_interprete = t_i.cod_interprete ON t_cp.cod_faixa = t_f.cod_faixa
     ON t_cp.cod_compositor = t_c.cod_compositor ON t_c.cod_periodo = t_p.cod_periodo ON t_c.cod_faixa = t_f.cod_faixa
-GROUP BY t_play.nome, t_f.descricao,  t_c.nome,  t_i.nome,  t_a.descricao
+GROUP BY t_play.nome, t_f.descricao,  t_c.nome,  t_i.nome,  t_a.descricao;
+
+select num_faixa, fa.descricao, c.nome as 'compositor', tempo_execucao, ti.nome as 'interprete', tcomp.descricao as 'tipo_composicao', tipo_gravacao
+from tb_faixa_album fb, tb_albuns al, tb_faixas fa, tb_intepretada_por tip, tb_interpretes ti, tb_composta_por cp, tb_compositores c, tb_composicoes tcomp
+where fa.cod_faixa = fb.cod_faixa and fb.cod_album = al.cod_album and fa.cod_faixa = tip.cod_faixa and tip.cod_interprete = ti.cod_interprete
+    and cp.cod_faixa = fa.cod_faixa and cp.cod_compositor = c.cod_compositor and tcomp.cod_composicao = fa.cod_composicao and al.cod_album = ?

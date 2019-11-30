@@ -84,7 +84,7 @@ def playlist_page(playlist):
 # Mostra as músicas de um determinado álbum
 @app.route('/showmusicsalbum/<album>', methods=['GET'])
 def show_musics_album(album):
-    cursor.execute("""select num_faixa, fa.descricao, c.nome as 'compositor', tempo_execucao, ti.nome as 'interprete', tcomp.descricao as 'tipo_composicao', tipo_gravacao
+    cursor.execute("""select num_faixa, fa.descricao, c.nome as 'compositor', tempo_execucao, ti.nome as 'interprete', tcomp.descricao as 'tipo_composicao', tipo_gravacao, fb.cod_faixa
                       from tb_faixa_album fb, tb_albuns al, tb_faixas fa, tb_intepretada_por tip, tb_interpretes ti, tb_composta_por cp,tb_compositores c, tb_composicoes tcomp
                       where fa.cod_faixa = fb.cod_faixa and fb.cod_album = al.cod_album and fa.cod_faixa = tip.cod_faixa and tip.cod_interprete = ti.cod_interprete
 	                  and cp.cod_faixa = fa.cod_faixa and cp.cod_compositor = c.cod_compositor and tcomp.cod_composicao = fa.cod_composicao and al.cod_album = ?""", album)
@@ -94,10 +94,23 @@ def show_musics_album(album):
         musics.append(dict(zip(columns, row)))
     return jsonify(musics)
 
+#Mostra as músicas de uma determinada playlist
+@app.route('/showmusicsplaylist/<playlist>', methods=['GET'])
+def show_musics_playlist(playlist):
+    cursor.execute("""select f.descricao, f.tempo_execucao, a.descricao as 'album'
+                      from tb_faixas_playlists fp, tb_faixas f, tb_albuns a, tb_faixa_album fa
+                      where f.cod_faixa = fp.cod_faixa and f.cod_faixa = fa.cod_faixa and fp.cod_playlist = ?""", playlist)
+    musics = []
+    columns = [column[0] for column in cursor.description]
+    for row in cursor:
+        musics.append(dict(zip(columns, row)))
+    return jsonify(musics)
+    
 # incomplete cos im lazy
 @app.route('/addtoplaylist', methods=['GET', 'POST'])
 def add_to_playlist():
     if request.method == 'POST':
         data = request.json()
-        cursor.execute()
+        print(data)
+        cursor.execute('INSERT INTO tb_faixas_playlists VALUES (?, ?, GETDATE(), 1)', data.get('faixa'), data.get('playlist'))
         connection.commit()

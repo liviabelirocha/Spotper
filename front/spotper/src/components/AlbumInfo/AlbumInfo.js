@@ -14,7 +14,6 @@ export default class AlbumInfo extends React.Component {
         musics: [],
         link: this.props.match.params.album,
         pl: this.props.match.params.playlist,
-
     }
 
     componentDidMount() {
@@ -28,8 +27,19 @@ export default class AlbumInfo extends React.Component {
             });
     }
 
-    commitSong = event => {
-        event.preventDefault();
+    commitSong = (e) => {
+        let data = {
+            'faixa': e,
+            'playlist': this.state.pl
+        }
+        console.log(data)
+        /*
+        axios.post('http://localhost:5000/addtoplaylist', data)
+            .then(res => {
+                console.log(res);
+            }).catch(err => {
+                console.log(err);
+            })*/
 
     }
 
@@ -38,7 +48,7 @@ export default class AlbumInfo extends React.Component {
             return (
                 <tr key={item.num_faixa}>
                     <td>
-                        <button className="add-music-button" onClick={this.commitSong}>
+                        <button className="add-music-button" onClick={this.commitSong(item.cod_faixa)}>
                             <Plus className="add-music-icon" />
                         </button>
                     </td>
