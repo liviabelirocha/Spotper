@@ -12,3 +12,17 @@ select num_faixa, fa.descricao, c.nome as 'compositor', tempo_execucao, ti.nome 
 from tb_faixa_album fb, tb_albuns al, tb_faixas fa, tb_intepretada_por tip, tb_interpretes ti, tb_composta_por cp, tb_compositores c, tb_composicoes tcomp
 where fa.cod_faixa = fb.cod_faixa and fb.cod_album = al.cod_album and fa.cod_faixa = tip.cod_faixa and tip.cod_interprete = ti.cod_interprete
     and cp.cod_faixa = fa.cod_faixa and cp.cod_compositor = c.cod_compositor and tcomp.cod_composicao = fa.cod_composicao and al.cod_album = ?
+
+-- item C
+SELECT tc.nome, COUNT(*)
+FROM tb_playlists tp LEFT OUTER JOIN tb_faixas_playlists tfp ON tp.cod_playlist = tfp.cod_playlist
+    INNER JOIN tb_faixas tf ON tf.cod_faixa = tfp.cod_playlist
+    INNER JOIN tb_composta_por tbcp ON tbcp.cod_faixa = tf.cod_faixa
+    INNER JOIN tb_compositores tc ON tc.cod_compositor = tbcp.cod_compositor
+GROUP BY tc.nome
+HAVING COUNT(*) >= ALL (SELECT COUNT(*)
+                        FROM tb_playlists tp LEFT OUTER JOIN tb_faixas_playlists tfp ON tp.cod_playlist = tfp.cod_playlist
+                            INNER JOIN tb_faixas tf ON tf.cod_faixa = tfp.cod_playlist
+                            INNER JOIN tb_composta_por tbcp ON tbcp.cod_faixa = tf.cod_faixa
+                            INNER JOIN tb_compositores tc ON tc.cod_compositor = tbcp.cod_compositor
+                        GROUP BY tc.nome)
