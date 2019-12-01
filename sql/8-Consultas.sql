@@ -26,3 +26,9 @@ HAVING COUNT(*) >= ALL (SELECT COUNT(*)
                             INNER JOIN tb_composta_por tbcp ON tbcp.cod_faixa = tf.cod_faixa
                             INNER JOIN tb_compositores tc ON tc.cod_compositor = tbcp.cod_compositor
                         GROUP BY tc.nome)
+
+-- Item A
+SELECT * FROM tb_albuns
+SELECT descricao
+FROM tb_albuns
+WHERE preco_de_compra > (SELECT AVG(preco_de_compra) FROM tb_albuns)
