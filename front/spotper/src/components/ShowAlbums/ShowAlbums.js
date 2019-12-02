@@ -42,9 +42,6 @@ export default class ShowAlbums extends React.Component {
                 </Link>
                 <center className="available">Álbuns Disponíveis</center>
                 <div className="albums-rol">{albumNames}</div>
-                <Link to='/'>
-                    <button className="continue-album">Continuar</button>
-                </Link>
             </div>
         )
     }

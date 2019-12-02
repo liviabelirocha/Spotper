@@ -23,7 +23,8 @@ cursor = connection.cursor()
 def create_playlist():
     if request.method == 'POST':
         data = request.get_json()
-        cursor.execute("INSERT INTO tb_playlists (nome, data_criacao, tempo_exec) VALUES (?, GETDATE(), NULL)", data.get('name'))
+        cursor.execute(
+            "INSERT INTO tb_playlists (nome, data_criacao, tempo_exec) VALUES (?, GETDATE(), NULL)", data.get('name'))
         connection.commit()
         return data
 
@@ -79,6 +80,7 @@ def playlist_page(playlist):
         playlist_info["tempo_exec"] = 0
     return jsonify(playlist_info)
 
+
 @app.route('/playlistduration/<playlist>', methods=['GET'])
 def playlist_duration(playlist):
     cursor.execute("""select sum(f.tempo_execucao) as tempo_total
@@ -102,9 +104,13 @@ def show_musics_album(album):
     columns = [column[0] for column in cursor.description]
     for row in cursor:
         musics.append(dict(zip(columns, row)))
+
+    for i in range (0, len(musics)):
+        musics[i]['tempo_execucao'] = func.sec_to_min(musics[i]['tempo_execucao'])
+    
     return jsonify(musics)
 
-#Mostra as músicas de uma determinada playlist
+# Mostra as músicas de uma determinada playlist
 @app.route('/showmusicsplaylist/<playlist>', methods=['GET'])
 def show_musics_playlist(playlist):
     cursor.execute("""select f.descricao, f.tempo_execucao, a.descricao as 'album', f.cod_faixa
@@ -114,22 +120,28 @@ def show_musics_playlist(playlist):
     columns = [column[0] for column in cursor.description]
     for row in cursor:
         musics.append(dict(zip(columns, row)))
+
+    for i in range (0, len(musics)):
+        musics[i]['tempo_execucao'] = func.sec_to_min(musics[i]['tempo_execucao'])
+
     return jsonify(musics)
-    
-#Adiciona música a playlist
+
+# Adiciona música a playlist
 @app.route('/addtoplaylist', methods=['GET', 'POST'])
 def add_to_playlist():
     if request.method == 'POST':
         data = request.get_json()
-        cursor.execute('INSERT INTO tb_faixas_playlists VALUES (?, ?, GETDATE(), 1)', data.get('faixa'), data.get('playlist'))
+        cursor.execute('INSERT INTO tb_faixas_playlists VALUES (?, ?, GETDATE(), 1)', data.get(
+            'faixa'), data.get('playlist'))
         connection.commit()
         return data
 
-#Remove músicas da playlist
+# Remove músicas da playlist
 @app.route('/removefromplaylist', methods=['GET', 'POST'])
 def remove_from_playlist():
     if request.method == 'POST':
         data = request.get_json()
-        cursor.execute('DELETE FROM tb_faixas_playlists WHERE cod_playlist = ? and cod_faixa = ?', data.get('playlist'), data.get('faixa'))
+        cursor.execute('DELETE FROM tb_faixas_playlists WHERE cod_playlist = ? and cod_faixa = ?', data.get(
+            'playlist'), data.get('faixa'))
         connection.commit()
         return data
