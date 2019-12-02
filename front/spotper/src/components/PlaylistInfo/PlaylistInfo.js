@@ -76,6 +76,7 @@ export default class AlbumInfo extends React.Component {
                     <td className="song-info">{item.album}</td>
                     <td className="song-info">{item.tempo_execucao}</td>
                     <td className="song-info">{item.ultima_tocagem}</td>
+                    <td className="song-info">{item.quantidade}</td>
                 </tr>
             )
         })
@@ -110,6 +111,7 @@ export default class AlbumInfo extends React.Component {
                         <th className="song-head">album</th>
                         <th className="song-head">duração</th>
                         <th className="song-head">última tocagem</th>
+                        <th className="song-head">nº de vezes tocada</th>
                     </tr>
                     <tbody>{musics}</tbody>
                 </table>
