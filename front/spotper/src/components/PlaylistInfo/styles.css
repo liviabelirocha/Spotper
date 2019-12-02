@@ -52,3 +52,7 @@ hr {
 .remove-music-button:focus {
     outline: none;
 }
+
+.update-song:hover {
+    background-color: rgba(88, 89, 91, 0.3);
+}

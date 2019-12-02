@@ -41,7 +41,7 @@ CREATE TABLE tb_albuns
 	data_de_gravacao DATE NOT NULL,
 	cod_gravadora BIGINT NOT NULL,
 
-	CONSTRAINT fk_cod_gravadora FOREIGN KEY (cod_gravadora)
+	CONSTRAINT fk_cod_gravadora_albuns FOREIGN KEY (cod_gravadora)
 		REFERENCES tb_gravadoras (cod_gravadora)
 			ON DELETE NO ACTION
 				ON UPDATE CASCADE,
@@ -100,7 +100,7 @@ CREATE TABLE tb_playlists
 
 CREATE TABLE tb_faixas
 (
-	cod_faixa BIGINT PRIMARY KEY NOT NULL,
+	cod_faixa BIGINT PRIMARY KEY IDENTITY(1,1),
 	descricao VARCHAR(50) NOT NULL,
 	tempo_execucao FLOAT NOT NULL,
 	tipo_gravacao VARCHAR(50) NOT NULL,
@@ -109,7 +109,9 @@ CREATE TABLE tb_faixas
 	CONSTRAINT fk_cod_composicao FOREIGN KEY (cod_composicao)
 		REFERENCES tb_composicoes (cod_composicao)
 			ON DELETE NO ACTION
-				ON UPDATE CASCADE
+				ON UPDATE CASCADE,
+
+	CHECK (tipo_gravacao LIKE 'ADD' OR tipo_gravacao LIKE 'DDD')
 ) on SpotPer_Terc;
 
 
@@ -121,7 +123,10 @@ CREATE TABLE tb_faixas
 
 CREATE TABLE tb_composta_por
 (
-	CONSTRAINT fk_cod_faixa FOREIGN KEY (cod_faixa)
+	cod_faixa BIGINT NOT NULL,
+	cod_compositor BIGINT NOT NULL,
+
+	CONSTRAINT fk_cod_faixa_composta_por FOREIGN KEY (cod_faixa)
 		REFERENCES tb_faixas (cod_faixa)
 			ON DELETE NO ACTION
 			ON UPDATE CASCADE,
@@ -134,7 +139,10 @@ CREATE TABLE tb_composta_por
 
 CREATE TABLE tb_intepretada_por
 (
-	CONSTRAINT fk_cod_faixa FOREIGN KEY (cod_faixa)
+	cod_faixa BIGINT NOT NULL,
+	cod_interprete BIGINT NOT NULL,
+
+	CONSTRAINT fk_cod_faixa_interpretada_por FOREIGN KEY (cod_faixa)
 		REFERENCES tb_faixas (cod_faixa)
 			ON DELETE NO ACTION
 			ON UPDATE CASCADE,
@@ -147,8 +155,11 @@ CREATE TABLE tb_intepretada_por
 
 CREATE TABLE tb_faixa_album
 (
+	cod_faixa BIGINT NOT NULL,
+	cod_album BIGINT NOT NULL,
 	num_faixa INTEGER NOT NULL,
-	CONSTRAINT fk_cod_faixa FOREIGN KEY (cod_faixa)
+
+	CONSTRAINT fk_cod_faixa_album FOREIGN KEY (cod_faixa)
 		REFERENCES tb_faixas (cod_faixa)
 			ON DELETE CASCADE
 			ON UPDATE CASCADE,
@@ -165,9 +176,12 @@ CREATE TABLE tb_faixa_album
 
 CREATE TABLE tb_faixas_playlists
 (
+	cod_faixa BIGINT NOT NULL,
+	cod_playlist BIGINT NOT NULL,
 	ultima_vez_tocada DATE,
 	quantidade BIGINT NOT NULL,
-	CONSTRAINT fk_cod_faixa FOREIGN KEY (cod_faixa)
+
+	CONSTRAINT fk_cod_faixa_playlists FOREIGN KEY (cod_faixa)
 		REFERENCES tb_faixas (cod_faixa)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,

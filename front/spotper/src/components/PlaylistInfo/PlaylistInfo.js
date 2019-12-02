@@ -46,16 +46,35 @@ export default class AlbumInfo extends React.Component {
         })
     }
 
+    updateSong = (e) => {
+        let data = {
+            'faixa': e,
+            'playlist': parseInt(this.state.link)
+        }
+        console.log(data)
+        axios.post('http://localhost:5000/updatesong', data, {
+            headers: { 'Access-Control-Allow-Origin': '*' },
+        }).then(res => {
+            console.log(res);
+            //window.location.reload();
+        }).catch(err => {
+            console.log(err);
+            alert("Não é possível reproduzir a música no momento!")
+        })
+    }
+
     render() {
         const musics = this.state.musics.map((item) => {
+            console.log(typeof item.ultima_tocagem)
             return (
                 <tr key={item.num_faixa}>
                     <td>
                         <button className="remove-music-button" onClick={() => this.removeSong(item.cod_faixa)}> - </button>
                     </td>
-                    <td className="song-info">{item.descricao}</td>
+                    <td className="song-info update-song" onClick={() => this.updateSong(item.cod_faixa)}>{item.descricao}</td>
                     <td className="song-info">{item.album}</td>
                     <td className="song-info">{item.tempo_execucao}</td>
+                    <td className="song-info">{item.ultima_tocagem}</td>
                 </tr>
             )
         })
@@ -77,7 +96,7 @@ export default class AlbumInfo extends React.Component {
                     </h1>
                     <h3>
                         Tempo de duração: &nbsp;
-                        {this.state.duration} s
+                        {this.state.duration} min
                         <br></br>
                         Criada em: &nbsp;
                         {this.state.playlistData.data_criacao}
@@ -89,6 +108,7 @@ export default class AlbumInfo extends React.Component {
                         <th className="song-head song-name">nome</th>
                         <th className="song-head">album</th>
                         <th className="song-head">duração</th>
+                        <th className="song-head">última tocagem</th>
                     </tr>
                     <tbody>{musics}</tbody>
                 </table>

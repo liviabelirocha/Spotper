@@ -1,7 +1,7 @@
 .background {
     height: 100vh;
     width: 100vw;
-    background-image: url("../../assets/home.png");
+    background-color: #414042;
     background-size: cover;
 }
 

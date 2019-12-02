@@ -30,6 +30,10 @@
     color: white;
 }
 
+.goBack:focus {
+    outline: none;
+}
+
 .continue-album {
     text-decoration: none;
     border: none;

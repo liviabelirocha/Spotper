@@ -23,7 +23,7 @@ export default class CreatePlaylist extends React.Component {
         }).catch(error => {
             console.log(error);
             alert("Erro!");
-            this.props.history.push('/playlists');
+            this.props.history.push('/');
         });
     }
 
@@ -34,7 +34,7 @@ export default class CreatePlaylist extends React.Component {
                 <center className="title">Nova Playlist</center>
                 <form className="form" onSubmit={this.handleClick}>
                     <p>Nome da Playlist: </p>
-                    <input type="text" className="nomeForm" name='name' onChange={this.handleChange} required></input><br />
+                    <input type="text" className="nomeForm" name='name' onChange={this.handleChange} autocomplete="off" required></input><br />
                     <button className="createButton" type='submit'>Criar</button>
                 </form>
             </div>

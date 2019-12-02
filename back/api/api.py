@@ -85,12 +85,16 @@ def playlist_page(playlist):
 def playlist_duration(playlist):
     cursor.execute("""select sum(f.tempo_execucao) as tempo_total
                       from tb_playlists p, tb_faixas_playlists fp, tb_faixas f
-                      where p.cod_playlist = fp.cod_playlist and fp.cod_playlist = ?""", playlist)
+                      where p.cod_playlist = fp.cod_playlist and f.cod_faixa = fp.cod_faixa and fp.cod_playlist = ?""", playlist)
     tempo = []
     for row in cursor:
         tempo = row.tempo_total
+        if tempo == None:
+            tempo = 0
+            break
         tempo = func.sec_to_min(tempo)
         break
+    print(tempo)
     return jsonify(tempo)
 
 # Mostra as músicas de um determinado álbum
@@ -105,24 +109,26 @@ def show_musics_album(album):
     for row in cursor:
         musics.append(dict(zip(columns, row)))
 
-    for i in range (0, len(musics)):
-        musics[i]['tempo_execucao'] = func.sec_to_min(musics[i]['tempo_execucao'])
-    
+    for i in range(0, len(musics)):
+        musics[i]['tempo_execucao'] = func.sec_to_min(
+            musics[i]['tempo_execucao'])
+
     return jsonify(musics)
 
 # Mostra as músicas de uma determinada playlist
 @app.route('/showmusicsplaylist/<playlist>', methods=['GET'])
 def show_musics_playlist(playlist):
-    cursor.execute("""select f.descricao, f.tempo_execucao, a.descricao as 'album', f.cod_faixa
+    cursor.execute("""select f.descricao, f.tempo_execucao, a.descricao as 'album', f.cod_faixa, fp.ultima_vez_tocada as 'ultima_tocagem'
                       from tb_faixas_playlists fp, tb_faixas f, tb_albuns a, tb_faixa_album fa
-                      where f.cod_faixa = fp.cod_faixa and f.cod_faixa = fa.cod_faixa and fp.cod_playlist = ?""", playlist)
+                      where f.cod_faixa = fp.cod_faixa and f.cod_faixa = fa.cod_faixa and a.cod_album = fa.cod_album and fp.cod_playlist = ?""", playlist)
     musics = []
     columns = [column[0] for column in cursor.description]
     for row in cursor:
         musics.append(dict(zip(columns, row)))
 
-    for i in range (0, len(musics)):
-        musics[i]['tempo_execucao'] = func.sec_to_min(musics[i]['tempo_execucao'])
+    for i in range(0, len(musics)):
+        musics[i]['tempo_execucao'] = func.sec_to_min(
+            musics[i]['tempo_execucao'])
 
     return jsonify(musics)
 
@@ -143,5 +149,16 @@ def remove_from_playlist():
         data = request.get_json()
         cursor.execute('DELETE FROM tb_faixas_playlists WHERE cod_playlist = ? and cod_faixa = ?', data.get(
             'playlist'), data.get('faixa'))
+        connection.commit()
+        return data
+
+
+@app.route('/updatesong', methods=['GET', 'POST'])
+def update_song():
+    if request.method == 'POST':
+        data = request.get_json()
+        cursor.execute("""UPDATE tb_faixas_playlists
+                          SET ultima_vez_tocada = GETDATE()
+                          WHERE cod_faixa = ? AND cod_playlist = ?""", data.get('faixa'), data.get('playlist'))
         connection.commit()
         return data
