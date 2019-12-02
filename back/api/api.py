@@ -94,7 +94,6 @@ def playlist_duration(playlist):
             break
         tempo = func.sec_to_min(tempo)
         break
-    print(tempo)
     return jsonify(tempo)
 
 # Mostra as músicas de um determinado álbum

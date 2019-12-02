@@ -23,6 +23,7 @@ export default class AlbumInfo extends React.Component {
                         this.setState({ duration: res.data });
                         axios.get('http://localhost:5000/showmusicsplaylist/' + this.state.link)
                             .then(res => {
+                                console.log(res.data)
                                 this.setState({ musics: res.data });
                             })
                     })
@@ -56,7 +57,7 @@ export default class AlbumInfo extends React.Component {
             headers: { 'Access-Control-Allow-Origin': '*' },
         }).then(res => {
             console.log(res);
-            //window.location.reload();
+            window.location.reload();
         }).catch(err => {
             console.log(err);
             alert("Não é possível reproduzir a música no momento!")
@@ -65,7 +66,7 @@ export default class AlbumInfo extends React.Component {
 
     render() {
         const musics = this.state.musics.map((item) => {
-            console.log(typeof item.ultima_tocagem)
+            item.ultima_tocagem = (item.ultima_tocagem).slice(0, 17)
             return (
                 <tr key={item.num_faixa}>
                     <td>

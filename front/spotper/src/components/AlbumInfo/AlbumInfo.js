@@ -21,6 +21,8 @@ export default class AlbumInfo extends React.Component {
             headers: { 'Access-Control-Allow-Origin': '*' },
         }).then(res => {
             this.setState({ albumData: res.data });
+            this.state.albumData.data_de_gravacao = (this.state.albumData.data_de_gravacao).slice(0, 17);
+            this.state.albumData.data_de_compra = (this.state.albumData.data_de_compra).slice(0, 17);
             axios.get('http://localhost:5000/showmusicsalbum/' + this.state.link)
                 .then(res => {
                     this.setState({ musics: res.data });
@@ -46,6 +48,7 @@ export default class AlbumInfo extends React.Component {
     }
 
     render() {
+
         const musics = this.state.musics.map((item) => {
             return (
                 <tr key={item.num_faixa}>
