@@ -56,3 +56,21 @@ HAVING gp.qtd >= ALL (SELECT MAX(gp.qtd)
                 GROUP BY gp.nome, gp.qtd)
 
 */
+-- Item D
+/*
+SELECT tp.nome, tf.descricao, tc.descricao, tps.descricao
+FROM tb_playlists tp INNER JOIN tb_faixas_playlists tfp ON tp.cod_playlist = tfp.cod_playlist
+    INNER JOIN tb_faixas tf ON tf.cod_faixa = tfp.cod_faixa
+    INNER JOIN tb_composicoes tc ON tc.cod_composicao = tf.cod_composicao
+    INNER JOIN tb_composta_por tbcp ON tbcp.cod_faixa = tf.cod_faixa
+    INNER JOIN tb_compositores tcps ON tcps.cod_compositor = tbcp.cod_compositor
+    INNER JOIN tb_periodos tps ON tps.cod_periodo = tcps.cod_periodo
+WHERE NOT EXISTS (SELECT *
+                FROM tb_playlists tp2 INNER JOIN tb_faixas_playlists tfp ON tp2.cod_playlist = tfp.cod_playlist
+                    INNER JOIN tb_faixas tf ON tf.cod_faixa = tfp.cod_faixa
+                    INNER JOIN tb_composicoes tc ON tc.cod_composicao = tf.cod_composicao AND tc.descricao NOT LIKE '%Concerto%'
+                    INNER JOIN tb_composta_por tbcp ON tbcp.cod_faixa = tf.cod_faixa
+                    INNER JOIN tb_compositores tcps ON tcps.cod_compositor = tbcp.cod_compositor
+                    INNER JOIN tb_periodos tps ON tps.cod_periodo = tcps.cod_periodo AND tps.descricao NOT LIKE '%Barroco%'
+                WHERE tp.cod_playlist = tp2.cod_playlist)
+*/
